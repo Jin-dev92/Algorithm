@@ -1,33 +1,42 @@
-# DFS는 스택 자료 구조를 이용하며, 구체적인 동작과정은 다음과 같다.
-# 1. 탐색 시작 노드를 스택에 삽입하고 방문 처리를 한다.
-# 2. 스택의 최상단 노드에 방문하지 않은 인접 노드가 있으면 그 인접 노드를 스택에 넣고 방문 처리를 한다. 방문하지 않은 인접 노드가 없다면 스택에서 최상단 노드를 꺼낸다.
-# 3. 2번 과정을 수행할 수 없을 때 까지 한다.
+# 음료수 얼려먹기 149p
+# 특정한 지점의 주변 상, 하, 좌, 우를 살펴본 뒤에 주변 지점 중에서 값이 '0'이면서 아직 방문하지 않은 지점이 있다면 해당 지점을 방문한다
+#
+from collections import deque
+n, m = map(int, input().split())
+graph = []
+for i in range(n):
+    graph.append(list(map(int, input())))
 
 
-graph = [
-    [],
-    [2, 3, 8],
-    [1, 7],
-    [1, 4, 5],
-    [3, 5],
-    [3, 4],
-    [7],
-    [2, 6, 8],
-    [1, 7]
-]
+# graph = [[0] * m for _ in range(n)]
+# print(graph)
 
-# 각 노드가 방문된 정보를 리스트 자료형으로 표현
-visited = [False] * len(graph)
-
-def dfs(graph, v, visited): # v : 검색 시작 노드
-    # 현재 노드를 방문처리
-    visited[v] = True
-    print(v, end=' ');
-    # 현재 노드와 연결된 다른 노드를 재귀적으로 방문
-    for i in graph[v]:
-        if not visited[i]:
-            dfs(graph, i, visited)
+# visited = [[False] * m for _ in range(n)]
+# print(visited)
 
 
-# 정의된 DFS 함수 호출
-dfs(graph, 1, visited)
+def dfs(x, y):
+    # 주어진 범위를 벗어나는 경우 즉시 종료
+    if x <= -1 or x >= n or y <= -1 or y >= m:
+        return False
+    # 현재 노드를 아직 방문하지 않았다면
+    if graph[x][y] == 0:
+        graph[x][y] = 1
+        # 상하좌우의 위치도 모두 재귀적으로 호출
+        dfs(x - 1, y)
+        dfs(x, y - 1)
+        dfs(x + 1, y)
+        dfs(x, y + 1)
+        return True
+    return False
+
+
+count = 0
+for i in range(n):
+    for j in range(m):
+        # 현재 위치에서 DFS 수행
+        if dfs(i, j):
+            count += 1
+
+print(count)
+# queue = deque([start])
