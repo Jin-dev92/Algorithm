@@ -1,7 +1,6 @@
 # 음료수 얼려먹기 149p
 # 특정한 지점의 주변 상, 하, 좌, 우를 살펴본 뒤에 주변 지점 중에서 값이 '0'이면서 아직 방문하지 않은 지점이 있다면 해당 지점을 방문한다
 #
-from collections import deque
 n, m = map(int, input().split())
 graph = []
 for i in range(n):
