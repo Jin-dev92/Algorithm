@@ -1,6 +1,3 @@
-from collections import deque
-
-
 # stack
 # 상자 쌓기에 비유할 수 있음.
 # 기본적으로 배열을 선언하면 스택구조로 선언이 됨.

@@ -1,6 +1,5 @@
 # 110p 상하좌우 문제
 # n = map(int, input().split())
-import switch as switch
 
 # n = int(input())  # 배열 수 n * n
 # move_input = input().split()  # 명렁 input
