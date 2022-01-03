@@ -1,30 +1,44 @@
 # 피보나치 수열
 # 피보나치 수열은 동적 프로그래밍으로 처리 할 수 있다.
 # 재귀 함수로 구현
-def pibonacci(x):
-    if x == 1 or x == 2:
-        return 1
-    return pibonacci(x - 1) + pibonacci(x - 2)
-
-
-print(pibonacci(4))
+# def pibonacci(x):
+#     if x == 1 or x == 2:
+#         return 1
+#     return pibonacci(x - 1) + pibonacci(x - 2)
+#
+#
+# print(pibonacci(4))
 
 # 위와 같이 재귀함수로 피보나치 수열을 작성한 경우, x의 숫자가 커지면 커질수록 러닝 타임이 기하급수적으로 늘어난다.
 # 메모이제이션 기능을 사용하여 재귀함수를 구현
-d = [0] * 100
+# 재귀함수로 구현했을 경우 오버헤드가 발생할 수 있어 반복문으로 구현하는것이 좋다.
+# d = [0] * 100
 
 
 # 0 1 1 2
-def fibo(x):
-    # 종료 조건
-    if x == 1 or x == 2:
-        return 1
-    if d[x] != 0:  # 계산한 적이 있다면
-        return d[x]
-    # 아직 계산히자 않은 문제라면 점화식에 따라 피보나치 결과 반환
-    d[x] = fibo(x - 1) + fibo(x - 2)
-    # d[x] = dx
-    return d[x]
+# def fibo(x):
+#     # 종료 조건
+#     if x == 1 or x == 2:
+#         return 1
+#     if d[x] != 0:  # 계산한 적이 있다면
+#         return d[x]
+#     # 아직 계산히자 않은 문제라면 점화식에 따라 피보나치 결과 반환
+#     d[x] = fibo(x - 1) + fibo(x - 2)
+#     # d[x] = dx
+#     return d[x]
+#
+#
+# print(fibo(99))
 
+d = [0] * 100
+d[1] = 1
+d[2] = 1
+n = 99
 
-print(fibo(99))
+for i in range(3, n + 1):
+    d[i] = d[i - 1] + d[i - 2]
+
+# 탑다운 방식 - 큰 문제를 해결하기 위해 작은 문제를 호출함
+# 보텀업 - 단순히 반복문을 이용하여 소스코드를 작성하는 경우 작은 문제부터 답을 도출한다고 해서 보텀업 방식
+# 탑다운 (메모이제이션) 방식은 하향식이라고 하며, 보텀업 방식은 상향식 이라고 한다.
+# 다이나믹 프로그래밍의 전형적인 형태는 보텀업 방식이다.
