@@ -1,5 +1,3 @@
-import time
-
 # 다익스트라 최단 경로 알고리즘
 # GPS 소프트웨어의 기본 알고리즘
 # 알고리즘의 원리
@@ -13,7 +11,6 @@ import time
 # 2. 구현하기에 조금더 까다롭지만 빠르게 작동하는 소스
 # 도달하지 못하는 노드는 무한 (1e9) 로 둔다.
 # 한 단계 당 하나의 노드에 대한 최단 거리를 확실히 찾는 것
-start = time.time()
 # 방법 1 . 간단한 다익스트라 알고리즘
 # 단계마다 방문하지 않은 노드 중에서 최단 거리가 가장 짧은 노드를 선택하기 위해 매 단계마다 1차원 리스트의 모든 원소를 확인(순차 탐색) 한다.
 # import sys
@@ -79,8 +76,57 @@ start = time.time()
 
 #   --------------------------------------------------------
 # 방법 2. 개선된 다익스트라 알고리즘
-# 힙 자료구조 - 우선순위 큐를 구현하기 위한 자료구조
+# 힙 자료구조 - 우선순위 큐를 구현하기  위한 자료구조
 # 우선순위가 가장 높은 데이터가 먼저 삭제되는 자료구조
 # (가치, 물건) 식으로 데이터를 삽입하는데 '가치' 벨류가 우선순위 값이 된다.
 
-print(time.time() - start)
+import heapq
+import sys
+import time
+
+start_time = time.time()
+# input = sys.stdin.readline()
+INF = int(1e9)
+n, m = map(int, input().split())
+# 시작 노드 번호를 입력받기
+start = int(input())
+# 각 노드에 연결되어 있는 노드에 대한 정보를 담는 리스트를 만들기
+graph = [[] for i in range(n + 1)]
+# 최단 거리 테이블을 모두 무한으로 초기화
+distance = [INF] * (n + 1)
+
+# 모든 간선 정보 받기
+for _ in range(m):
+    a, b, c = map(int, input().split())
+    graph[a].append((b, c))
+
+
+def dijkstra(start):
+    q = []
+    # 시작 노드로 가기 위한 최단 경로는 0으로 설정하며, 큐에 삽입
+    heapq.heappush(q, (0, start))
+    distance[start] = 0
+    while q:  # 큐가 비어있지 않다면 계속 돌아감
+        # 가장 최단 거리가 짧은 노드에 대한 정보 꺼내기
+        dist, now = heapq.heappop(q)
+        # 현재 노드가 이미 처리된 적이 있는 노드라면 무시
+        if distance[now] < dist:
+            continue
+        # 현재 노드와 연결된 다른 인접한 노드들을 확인
+        for i in graph[now]:
+            cost = dist + i[1]
+            # 현재 노드를 거쳐서, 다른 노드로 이동하는 거리가 더 짧은 경우
+            if cost < distance[i[0]]:
+                distance[i[0]] = cost
+                heapq.heappush(q, (cost, i[0]))
+
+
+# 다익스트라 수행
+dijkstra(start)
+
+for i in range(1, n + 1):
+    if distance[i] == INF:
+        print("도달할수 없음")
+    else:
+        print(distance[i])
+print(time.time() - start_time)
