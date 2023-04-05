@@ -30,6 +30,7 @@ def bfs(graph, start, visited):
     while queue:
         # 큐에서 하나의 원소를 봅아 출력
         v = queue.popleft()
+        print(queue)
         print(v,end=' ')
         # 해당 원소와 연결되었고 , 방문하지 않은 원소들을 큐에 삽입
         for i in graph[v] :
